@@ -3,13 +3,23 @@ public class Duke {
     public static void main(String[] args) {
         answer("Hello! I'm Duke\nWhat can I do for you?");
         Scanner in=new Scanner(System.in);
+        String[] list=new String[100];
+        int listlength=0;
         while(true){
             String input=in.nextLine();
-            if(input.equals("bye")){
+            if(input.equals("list")){
+                String output="";
+                for(int i=0;i<listlength-1;i++)
+                    output+=i+1+". "+list[i]+"\n";
+                output+=listlength+". "+list[listlength-1];
+                answer(output);
+            }else if(input.equals("bye")){
                 answer("Bye. Hope to see you again soon!");
                 break;
+            }else {
+                list[listlength++]=input;
+                answer("added: "+input);
             }
-            answer(input);
         }
     }
     public static void answer(String toPrint){
