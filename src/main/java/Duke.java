@@ -6,9 +6,9 @@ public class Duke {
         Scanner in=new Scanner(System.in);
         ArrayList<Task> taskList=new ArrayList<Task>();
         while(true){
-            String input=in.nextLine();
+            String input=in.next();
             if(input.equals("list")){
-                String output="";
+                String output="Here are the tasks in your list:\n";
                 for(int i=0;i<taskList.size()-1;i++)
                     output+=i+1+"."+taskList.get(i)+"\n";
                 output+=taskList.size()+"."+taskList.get(taskList.size()-1);
@@ -17,15 +17,24 @@ public class Duke {
             }else if(input.equals("bye")){
                 answer("Bye. Hope to see you again soon!");
                 break;
-            }else if(input.length()>=4){
-                if(input.substring(0,4).equals("done")){
-                    taskList.get(Integer.parseInt(input.substring(5))-1).markAsDone();
-                    answer("Nice! I've marked this task as done: \n"+taskList.get(Integer.parseInt(input.substring(5))-1));
-                    continue;
-                }
+            }else if(input.equals("done")){
+                int index=Integer.parseInt(in.next())-1;
+                taskList.get(index).markAsDone();
+                answer("Nice! I've marked this task as done: \n"+taskList.get(index));
+                continue;
+            }else if(input.equals("todo")){
+                String line=in.nextLine();
+                taskList.add(new ToDo(line));
+            }else if(input.equals("event")){
+                String line=in.nextLine();
+                String[] splites=line.split(" /at ",2);
+                taskList.add(new Events(splites[0],splites[1]));
+            }else if(input.equals("deadline")){
+                String line=in.nextLine();
+                String[] spllites=line.split(" /by ",2);
+                taskList.add(new Deadline(spllites[0],spllites[1]));
             }
-            taskList.add(new Task(input));
-            answer("added: "+input);
+            answer("Got it. I've added this task: \n\t"+taskList.get(taskList.size()-1)+"\nNow you have "+taskList.size()+" tasks in the list.");
 
         }
     }
