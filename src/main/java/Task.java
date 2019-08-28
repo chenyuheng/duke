@@ -1,3 +1,6 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -32,6 +35,7 @@ public class Task {
      */
     public static Task parse(String line) {
         String[] splites = line.split(" \\| ");
+        SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy hhmm");
         Task temp;
         if (splites[0].equals("T")) {
             temp = new ToDo(splites[2]);
@@ -39,12 +43,20 @@ public class Task {
                 temp.markAsDone();
             }
         } else if (splites[0].equals("E")) {
-            temp = new Event(splites[2], splites[3]);
+            try {
+                temp = new Event(splites[2], ft.parse(splites[3]));
+            } catch (ParseException e) {
+                temp = new Task("this task will exit if duke.txt have format error in time. Original line: " + line);
+            }
             if (splites[1].equals("1")) {
                 temp.markAsDone();
             }
         } else if (splites[0].equals("D")) {
-            temp = new Deadline(splites[2], splites[3]);
+            try {
+                temp = new Deadline(splites[2], ft.parse(splites[3]));
+            } catch (ParseException e) {
+                temp = new Task("this task will exit if duke.txt have format error in time. Original line: " + line);
+            }
             if (splites[1].equals("1")) {
                 temp.markAsDone();
             }

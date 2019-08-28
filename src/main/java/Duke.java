@@ -1,4 +1,6 @@
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -12,7 +14,8 @@ public class Duke {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        duketxt = new File("D:\\duke\\data\\duke.txt");
+        duketxt = new File("./data/duke.txt");
+        SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy hhmm");
 
         answer("Hello! I'm Duke\nWhat can I do for you?");
         Scanner in = new Scanner(System.in);
@@ -63,10 +66,12 @@ public class Duke {
                 }
                 String[] splites = line.split(" /at ",2);
                 try {
-                    taskList.add(new Event(splites[0],splites[1]));
+                    taskList.add(new Event(splites[0],ft.parse(splites[1])));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     answer("☹ OOPS!!! Please enter the right event time after \" /at \".");
                     continue;
+                } catch (ParseException e) {
+                    answer("☹ OOPS!!! Please enter time in right format: dd/MM/yyyy hhmm");
                 }
             } else if (input.equals("deadline")) {
                 String line = in.nextLine();
@@ -76,10 +81,12 @@ public class Duke {
                 }
                 String[] spllites = line.split(" /by ",2);
                 try {
-                    taskList.add(new Deadline(spllites[0], spllites[1]));
+                    taskList.add(new Deadline(spllites[0], ft.parse(spllites[1])));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     answer("☹ OOPS!!! Please enter the right deadline time after \" /by \".");
                     continue;
+                } catch (ParseException e) {
+                    answer("☹ OOPS!!! Please enter time in right format: dd/MM/yyyy hhmm");
                 }
             } else {
                 answer("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
