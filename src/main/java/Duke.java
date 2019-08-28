@@ -13,32 +13,68 @@ public class Duke {
         while (true) {
             String input = in.next();
             if (input.equals("list")) {
-                String output = "Here are the tasks in your list:\n";
-                for (int i = 0;i < taskList.size() - 1;i++) {
-                    output += i + 1 + "." + taskList.get(i) + "\n";
+                String output = "Here are the tasks in your list:";
+                for (int i = 0;i < taskList.size();i++) {
+                    output += "\n" + (i + 1) + "." + taskList.get(i);
                 }
-                output += taskList.size() + "." + taskList.get(taskList.size() - 1);
                 answer(output);
                 continue;
             } else if (input.equals("bye")) {
                 answer("Bye. Hope to see you again soon!");
                 break;
             } else if (input.equals("done")) {
-                int index = Integer.parseInt(in.next()) - 1;
-                taskList.get(index).markAsDone();
+                int index;
+                String indexstr = in.next();
+                try {
+                    index = Integer.parseInt(indexstr) - 1;
+                } catch (NumberFormatException e) {
+                    answer("☹ OOPS!!! The index of task is not in integer number format.");
+                    continue;
+                }
+                try {
+                    taskList.get(index).markAsDone();
+                } catch (IndexOutOfBoundsException e) {
+                    answer("☹ OOPS!!! The index of task is out of range.");
+                    continue;
+                }
                 answer("Nice! I've marked this task as done: \n" + taskList.get(index));
                 continue;
             } else if (input.equals("todo")) {
                 String line = in.nextLine();
+                if (line.isBlank()) {
+                    answer("☹ OOPS!!! The description of todo cannot be empty.");
+                    continue;
+                }
                 taskList.add(new ToDo(line));
             } else if (input.equals("event")) {
                 String line = in.nextLine();
+                if (line.isBlank()) {
+                    answer("☹ OOPS!!! The description of event cannot be empty.");
+                    continue;
+                }
                 String[] splites = line.split(" /at ",2);
-                taskList.add(new Events(splites[0],splites[1]));
+                try {
+                    taskList.add(new Events(splites[0],splites[1]));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    answer("☹ OOPS!!! Please enter the right event time after \" /at \".");
+                    continue;
+                }
             } else if (input.equals("deadline")) {
                 String line = in.nextLine();
+                if (line.isBlank()) {
+                    answer("☹ OOPS!!! The description of todo cannot be empty.");
+                    continue;
+                }
                 String[] spllites = line.split(" /by ",2);
-                taskList.add(new Deadline(spllites[0],spllites[1]));
+                try {
+                    taskList.add(new Deadline(spllites[0], spllites[1]));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    answer("☹ OOPS!!! Please enter the right deadline time after \" /by \".");
+                    continue;
+                }
+            } else {
+                answer("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                continue;
             }
             answer("Got it. I've added this task: \n\t"
                     + taskList.get(taskList.size() - 1) + "\nNow you have " + taskList.size() + " tasks in the list.");
