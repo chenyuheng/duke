@@ -1,15 +1,23 @@
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
+    static File duketxt;
+    static InputStream is;
+    static OutputStream os;
+
     /***<p>
      * Main method of the entire project.</p>
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        duketxt = new File("D:\\duke\\data\\duke.txt");
+
         answer("Hello! I'm Duke\nWhat can I do for you?");
         Scanner in = new Scanner(System.in);
         ArrayList<Task> taskList = new ArrayList<Task>();
+        readData(taskList);
         while (true) {
             String input = in.next();
             if (input.equals("list")) {
@@ -38,6 +46,7 @@ public class Duke {
                     continue;
                 }
                 answer("Nice! I've marked this task as done: \n" + taskList.get(index));
+                saveData(taskList);
                 continue;
             } else if (input.equals("todo")) {
                 String line = in.nextLine();
@@ -54,7 +63,7 @@ public class Duke {
                 }
                 String[] splites = line.split(" /at ",2);
                 try {
-                    taskList.add(new Events(splites[0],splites[1]));
+                    taskList.add(new Event(splites[0],splites[1]));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     answer("☹ OOPS!!! Please enter the right event time after \" /at \".");
                     continue;
@@ -78,6 +87,8 @@ public class Duke {
             }
             answer("Got it. I've added this task: \n\t"
                     + taskList.get(taskList.size() - 1) + "\nNow you have " + taskList.size() + " tasks in the list.");
+            saveData(taskList);
+
         }
     }
 
@@ -102,5 +113,40 @@ public class Duke {
         }
         System.out.println(toPrint);
         System.out.println(horizontalLine);
+    }
+
+    /***<p>
+     * read the data stored in hard disk to taskList</p>
+     * @param taskList the array list stores all tasks
+     */
+    public static void readData(ArrayList<Task> taskList) {
+        try {
+            is = new FileInputStream(duketxt);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                taskList.add(Task.parse(line));
+            }
+            br.close();
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***<p>
+     * save the tasks data to the hard disk</p>
+     * @param taskList the array list of tasks to be saved
+     */
+    public static void saveData(ArrayList<Task> taskList) {
+        String output = "";
+        for (int i = 0; i < taskList.size();i++) {
+            output += taskList.get(i).dataString() + "\n";
+        }
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(duketxt));
+            bw.write(output);
+            bw.close();
+        } catch (IOException e) { }
     }
 }
