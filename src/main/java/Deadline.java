@@ -1,11 +1,21 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Deadline extends Task {
+    @Override
+    public void setTime(Date by) {
+        this.by = by;
+    }
+
     protected Date by;
 
     public Deadline(String description, Date by) {
         super(description);
         this.by = by;
+    }
+
+    public Deadline(String description) {
+        super(description);
     }
 
     @Override
@@ -15,6 +25,7 @@ public class Deadline extends Task {
 
     @Override
     public String dataString() {
-        return "D | " + (this.isDone ? 1 : 0) + " | " + this.description + " | " + this.by;
+        SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy hhmm");
+        return "D | " + (this.isDone ? 1 : 0) + " | " + this.description + " | " + ft.format(this.by);
     }
 }

@@ -1,13 +1,22 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event extends Task {
-    protected Date at;
+    private Date at;
 
     public Event(String description, Date at) {
         super(description);
         this.at = at;
     }
 
+    public Event(String description) {
+        super(description);
+    }
+
+    @Override
+    public void setTime(Date at) {
+        this.at = at;
+    }
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (at: " + at + ")";
@@ -15,6 +24,7 @@ public class Event extends Task {
 
     @Override
     public String dataString() {
-        return "E | " + (this.isDone ? 1 : 0) + " | " + this.description + " | " + this.at;
+        SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy hhmm");
+        return "E | " + (this.isDone ? 1 : 0) + " | " + this.description + " | " + ft.format(this.at);
     }
 }
