@@ -10,8 +10,7 @@ public class Ui {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
-        print(" Hello! I'm Duke\n" +
-                "     What can I do for you?");
+        print("Hello! I'm Duke\nWhat can I do for you?");
     }
 
     /***<p>
