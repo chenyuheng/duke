@@ -55,6 +55,8 @@ public class Parser {
             temp = new DoneCommand(splites[1]);
         } else if (splites[0].equals("BYE")) {
             temp = new ByeCommand();
+        } else if (splites[0].equals("DELETE")) {
+            temp = new DeleteCommand(splites[1]);
         } else if (splites[0].equals("FIND")) {
             temp = new FindCommand(splites[1]);
         } else {
