@@ -3,6 +3,9 @@ import java.util.Scanner;
 public class Ui {
     private static final String horizontalLine = "\t____________________________________________________________";
 
+    /**
+     * print out Duke logo and welcome message.
+     */
     public static void welcome() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

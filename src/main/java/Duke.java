@@ -17,6 +17,9 @@ public class Duke {
         tasks = storage.load();
     }
 
+    /**
+     * <p>main running structure of Duke.</p>
+     */
     public void run() {
         Ui.welcome();
         boolean isExit = false;
@@ -33,9 +36,9 @@ public class Duke {
         }
     }
 
-    /***<p>
-     * Main method of the entire project.</p>
-     * @param args command line arguments
+    /**
+     * <p>Main method of the entire project.</p>
+     * @param args command line arguments, not used here
      */
     public static void main(String[] args) {
         new Duke("../data/tasks.txt").run();

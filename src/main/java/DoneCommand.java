@@ -1,8 +1,9 @@
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class DoneCommand extends Command{
+public class DoneCommand extends Command {
     private String line;
+
     public DoneCommand(String line) {
         this.line = line;
     }

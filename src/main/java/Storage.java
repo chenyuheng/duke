@@ -5,12 +5,12 @@ public class Storage {
     private File dataFile;
     private InputStream is;
 
-    public Storage (String filePath) {
+    public Storage(String filePath) {
         dataFile = new File(filePath);
     }
 
-    /***<p>
-     * read the data stored in hard disk to taskList</p>
+    /**
+     * read the data stored in hard disk to taskList.
      */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<Task>();
@@ -29,9 +29,9 @@ public class Storage {
         return tasks;
     }
 
-    /***<p>
-     * save the tasks data to the hard disk</p>
-     * @param taskList the array list of tasks to be saved
+    /**
+     * save the tasks data to the hard disk.
+     * @param taskList the array list of tasks to be saved.
      */
     public boolean store(ArrayList<Task> taskList) {
         String output = "";

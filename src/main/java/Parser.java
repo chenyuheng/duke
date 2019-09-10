@@ -2,16 +2,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Parser {
-    /***<p>
-     * parse a line in the data text to an object
-     * </p>
+    /**
+     * <p>parse a line in the data text to an object.</p>
      * @param line a line of String to be parsed, without \n last
      * @return a Task object produced by the input line
      * @throws ParseException if the line cannot be parsed properly
      */
-    public static Task dataLine(String line) throws ParseException{
+    public static Task dataLine(String line) throws ParseException {
         String[] splites = line.split(" \\| ");
-        if (splites.length < 3 || (splites.length < 2 && (splites[0].equals("E") || splites[0].equals("D")) ) ) {
+        if (splites.length < 3 || (splites.length < 2 && (splites[0].equals("E") || splites[0].equals("D")))) {
             throw new ParseException("Invalid Duke data line, the information is incomplete.", -1);
         }
         Task temp;
@@ -22,7 +21,9 @@ public class Parser {
         } else if (splites[0].equals("D")) {
             temp = new Deadline("");
         } else {
-            throw new ParseException("Invalid data line input: the first character is not T, E or D, which cannot represent any task type Duke support.",-1);
+            throw new ParseException(
+                    "Invalid data line input: the first character is not T, E or D,"
+                            + " which cannot represent any task type Duke support.",-1);
         }
         try {
             if (Integer.parseInt(splites[1]) != 0) {
@@ -43,6 +44,12 @@ public class Parser {
         return temp;
     }
 
+    /**
+     * <p>Parse a command line String to a Command object.</p>
+     * @param line the input command line String
+     * @return the new Command object
+     * @throws DukeException if the format of command cannot be parsed
+     */
     public static Command commandLine(String line) throws DukeException {
         String[] splites = line.replaceAll("\\s{2,}", " ").split(" ",2);
         splites[0] = splites[0].trim().toUpperCase();
@@ -65,6 +72,12 @@ public class Parser {
         return temp;
     }
 
+    /**
+     * <p>Parse an add command to get the corresponding Task object.</p>
+     * @param line the add command line with "add" removed
+     * @return the corresponding Task object
+     * @throws DukeException if the format of command cannot be parsed
+     */
     public static Task addCommand(String line) throws DukeException {
         String[] splites = line.split(" ", 2);
         splites[0] = splites[0].toUpperCase();
@@ -75,7 +88,7 @@ public class Parser {
         if (splites[0].equals("TODO")) {
             temp = new ToDo(splites[1]);
             return temp;
-        } else if(splites[0].equals("DEADLINE")) {
+        } else if (splites[0].equals("DEADLINE")) {
             splites = splites[1].split("/by");
             if (splites.length < 2) {
                 throw new DukeException("No time keyword /by");
@@ -89,7 +102,7 @@ public class Parser {
             } catch (ParseException e) {
                 throw new DukeException("Invalid date format, the correct format is: dd/MM/yyyy hhmm");
             }
-        } else if(splites[0].equals("EVENT")) {
+        } else if (splites[0].equals("EVENT")) {
             splites = splites[1].split("/at");
             if (splites.length < 2) {
                 throw new DukeException("No time keyword /at");

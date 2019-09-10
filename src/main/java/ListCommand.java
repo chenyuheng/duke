@@ -4,6 +4,7 @@ public class ListCommand extends Command {
     public ListCommand() {
 
     }
+
     @Override
     public void execute(ArrayList<Task> tasks, Storage storage) {
         String output = "Here are the tasks in your list:";
