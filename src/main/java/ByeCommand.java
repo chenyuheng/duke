@@ -7,7 +7,7 @@ public class ByeCommand extends Command {
 
     @Override
     public void execute(ArrayList<Task> tasks, Storage storage) {
-        Ui.print("Bye. Hope to see you again soon!");
+        Ui.print("Bye. Hope to see you again soon! Good bye!");
     }
 
     @Override
