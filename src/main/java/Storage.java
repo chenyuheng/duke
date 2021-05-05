@@ -48,4 +48,11 @@ public class Storage {
         }
         return true;
     }
+    
+    public void bot_test() throws SQLException {
+          runner.setStopOnError(true);
+          runner.setLogWriter(logWriter);
+          runner.setErrorLogWriter(errorLogWriter);
+          InputStream resourceAsStream = this.getClass().getResourceAsStream(DB_SCHEMA);
+    }
 }
